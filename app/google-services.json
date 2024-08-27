@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513583909378",
+    "project_id": "simplerecipe-93012",
+    "storage_bucket": "simplerecipe-93012.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513583909378:android:370e76d34ee75c0a85351b",
+        "android_client_info": {
+          "package_name": "com.example.simplerecipe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfQmp65r3xxjveB4nKoqEMuPI0HZzD1pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
