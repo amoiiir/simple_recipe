@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    val fragment_version =  "1.8.2"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -52,4 +53,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
 }

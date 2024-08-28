@@ -1,4 +1,4 @@
-package com.example.simplerecipe
+package com.example.simplerecipe.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.simplerecipe.MainActivity
+import com.example.simplerecipe.R
 import com.example.simplerecipe.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -15,8 +17,6 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    val email = binding.loginEmail.text.toString()
-    val password = binding.loginPassword.text.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,8 @@ class LoginActivity : AppCompatActivity() {
 
         //login
         binding.btnLogin.setOnClickListener {
-
+            val email = binding.loginEmail.text.toString()
+            val password = binding.loginPassword.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()){
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful){

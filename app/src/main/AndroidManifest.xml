@@ -13,13 +13,13 @@
         android:theme="@style/Theme.SimpleRecipe"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".user.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".user.SignupActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
