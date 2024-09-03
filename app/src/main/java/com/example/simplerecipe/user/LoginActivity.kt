@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.simplerecipe.MainActivity
+import com.example.simplerecipe.view.MainActivity
 import com.example.simplerecipe.R
 import com.example.simplerecipe.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isSuccessful){
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+                        Log.d("recipe_debug", "onCreate: success")
                     }else {
                         Toast.makeText(this, "Error: ${it.exception?.message}", Toast.LENGTH_SHORT)
                             .show()
@@ -44,6 +45,8 @@ class LoginActivity : AppCompatActivity() {
 
             }else{
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+                Log.d("recipe_debug", "onCreate: Please fill all the fields")
+
             }
         }
 

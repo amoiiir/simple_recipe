@@ -1,35 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/darkblue">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/lightgrey">
 
         <LinearLayout
-            android:id="@+id/hello_user"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkblue"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="20dp">
 
             <TextView
+                android:id="@+id/home_user"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingVertical="0dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="20dp"
+                android:text="Welcome, User!"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearLayout">
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Hello user, home"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:padding="24dp">
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:overScrollMode="never">
 
-            </TextView>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+                    <LinearLayout
+                        android:id="@+id/top_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
 
-        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Recommended for you"
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:layout_margin="15dp">
 
-    </FrameLayout>
+                            </TextView>
 
-</FrameLayout>
+                            <TextView
+                                android:id="@+id/tv_result"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="result"
+                                android:textSize="18sp">
+
+                            </TextView>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            android:orientation="horizontal">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recommended_card"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:overScrollMode="never"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginHorizontal="15dp"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+
+                        </LinearLayout>
+                        <!--content-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:clipToPadding="false"
+                            android:clipChildren="false"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="List of products"
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:layout_margin="15dp">
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </FrameLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>
