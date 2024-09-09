@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleRecipe"
         tools:targetApi="31">
+
+        <!-- SplashActivity is now the entry point to determine where to redirect the user -->
+        <activity
+            android:name=".user.SplashActivity"
+            android:theme="@style/Theme.App.SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".user.LoginActivity"
             android:exported="false" />
@@ -20,13 +32,8 @@
             android:exported="false" />
         <activity
             android:name=".user.SignupActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
