@@ -63,6 +63,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:textSize="19sp"
+                android:background="@drawable/button_main"
                 android:text="Sign up">
 
             </Button>

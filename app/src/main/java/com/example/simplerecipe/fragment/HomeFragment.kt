@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplerecipe.R
@@ -27,8 +28,11 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var productViewModel: ProductViewModel
-    //call adapter
-    private lateinit var recyclerView: RecyclerView
+    //seperate recyclerview for recommended and product
+    private lateinit var recommendedRecyclerView: RecyclerView
+    private lateinit var productRecyclerView: RecyclerView
+
+    private lateinit var recommendedAdapter: ProductAdapter
     private lateinit var productAdapter: ProductAdapter
 
 
@@ -60,38 +64,46 @@ class HomeFragment : Fragment() {
 
         subscribe()
         recommendedCards()
+        gridProducts()
+    }
+
+    private fun gridProducts() {
+        productRecyclerView = binding.rvProductCards
+        productRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        productRecyclerView.setHasFixedSize(true)
+
+        productAdapter = ProductAdapter(ArrayList(), R.layout.rv_product_cards)
+        productRecyclerView.adapter = productAdapter
     }
 
     private fun recommendedCards() {
         //set up recyclerview layout
-        recyclerView = binding.rvRecommendedCards
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.setHasFixedSize(true)
+        recommendedRecyclerView = binding.rvRecommendedCards
+        recommendedRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recommendedRecyclerView.setHasFixedSize(true)
 
-        productAdapter = ProductAdapter(ArrayList())
-        recyclerView.adapter = productAdapter
+        recommendedAdapter = ProductAdapter(ArrayList(), R.layout.rv_recommended_cards)
+        recommendedRecyclerView.adapter = recommendedAdapter
     }
 
-
     private fun subscribe() {
-        productViewModel.loading.observe(viewLifecycleOwner){loading ->
-//            if (loading) binding.tvResult.text = "Loading"
-        }
-
-        productViewModel.error.observe(viewLifecycleOwner){error ->
-//            if (error) binding.tvResult.text = "Error"
-        }
-
         //for display data to the ui
         //viewlifecycleowner is like a lifecycle of the fragment
         productViewModel.productData.observe(viewLifecycleOwner){ data ->
-            Log.d("recipe_debug", "setResultText: rating ${data?.joinToString { it.rating.toString() }}")
 
-
-            //call adapter here
+            //call recommended cards    
             if (data != null) {
-                productAdapter = ProductAdapter(ArrayList(data))
-                recyclerView.adapter = productAdapter
+                recommendedAdapter = ProductAdapter(ArrayList(data), R.layout.rv_recommended_cards)
+                recommendedRecyclerView.adapter = recommendedAdapter
+                recommendedAdapter.notifyDataSetChanged()
+            }else{
+                Log.d("recipe_debug", "setResultText: data is null")
+            }
+
+            //call product adapter
+            if (data != null) {
+                productAdapter = ProductAdapter(ArrayList(data), R.layout.rv_product_cards)
+                productRecyclerView.adapter = productAdapter
                 productAdapter.notifyDataSetChanged()
             }else{
                 Log.d("recipe_debug", "setResultText: data is null")
@@ -104,6 +116,5 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }
