@@ -14,6 +14,7 @@ import com.example.simplerecipe.ViewModel.ProductViewModel
 import com.example.simplerecipe.adapter.ProductAdapter
 import com.example.simplerecipe.databinding.FragmentHomeBinding
 import com.example.simplerecipe.model.ProductResponseItem
+import com.google.firebase.firestore.FirebaseFirestore
 
 /*
 Available functions:
@@ -35,12 +36,16 @@ class HomeFragment : Fragment() {
     private lateinit var recommendedAdapter: ProductAdapter
     private lateinit var productAdapter: ProductAdapter
 
+    //call db
+    private lateinit var db: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //will create the fragment and will be used to initialize variables
         super.onCreate(savedInstanceState)
 
         productViewModel = ProductViewModel()
+        db = FirebaseFirestore.getInstance()
 
     }
 
@@ -62,9 +67,23 @@ class HomeFragment : Fragment() {
 
         productViewModel.getAllProduct()
 
+        greetings()
         subscribe()
         recommendedCards()
         gridProducts()
+    }
+
+    private fun greetings() {
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    binding.homeUser.text = "Hello, ${document.data["username"].toString()}!"
+                }
+            }
+            .addOnFailureListener { exception ->
+                binding.homeUser.text = "Welcome Back!"
+            }
     }
 
     private fun gridProducts() {
@@ -93,23 +112,33 @@ class HomeFragment : Fragment() {
 
             //call recommended cards    
             if (data != null) {
-                recommendedAdapter = ProductAdapter(ArrayList(data), R.layout.rv_recommended_cards)
-                recommendedRecyclerView.adapter = recommendedAdapter
-                recommendedAdapter.notifyDataSetChanged()
+                getRecommendedCards(data)
+                getProductCards(data)
+
+                recommendedAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
+                    override fun onItemClick(position: Int){
+                        val product = data[position]
+                        Log.d("recipe_debug", "onItemClick: ${product.title}")
+                        Log.d("recipe_debug", "onItemClick: ${product.id}")
+                    }
+                })
+
             }else{
                 Log.d("recipe_debug", "setResultText: data is null")
             }
-
-            //call product adapter
-            if (data != null) {
-                productAdapter = ProductAdapter(ArrayList(data), R.layout.rv_product_cards)
-                productRecyclerView.adapter = productAdapter
-                productAdapter.notifyDataSetChanged()
-            }else{
-                Log.d("recipe_debug", "setResultText: data is null")
-            }
-
         }
+    }
+
+    private fun getProductCards(data: List<ProductResponseItem>) {
+        productAdapter = ProductAdapter(ArrayList(data), R.layout.rv_product_cards)
+        productRecyclerView.adapter = productAdapter
+        productAdapter.notifyDataSetChanged()
+    }
+
+    private fun getRecommendedCards(data: List<ProductResponseItem>) {
+        recommendedAdapter = ProductAdapter(ArrayList(data), R.layout.rv_recommended_cards)
+        recommendedRecyclerView.adapter = recommendedAdapter
+        recommendedAdapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

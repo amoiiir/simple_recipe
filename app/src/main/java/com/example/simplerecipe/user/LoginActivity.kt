@@ -32,12 +32,19 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.loginPassword.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()){
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+
+                    //check current user
+                    val user = firebaseAuth.currentUser
+                    if(user != null){
+                        Log.d("recipe_debug", "onCreate: current user ${user.email}")
+                    }
+
                     if (it.isSuccessful){
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         Log.d("recipe_debug", "onCreate: success")
                     }else {
-                        Toast.makeText(this, "Error: ${it.exception?.message}", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, "Email is not signed up yet!", Toast.LENGTH_SHORT)
                             .show()
                         Log.d("recipe_debug", "onCreate: ${it.exception?.message}")
                     }

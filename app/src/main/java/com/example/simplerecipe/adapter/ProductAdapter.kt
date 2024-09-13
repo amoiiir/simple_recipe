@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,11 +16,17 @@ import kotlin.math.log
 
 class ProductAdapter(private val productList: ArrayList<ProductResponseItem>, private val layoutResId: Int): RecyclerView.Adapter<ProductAdapter.ViewHolderClass> (){
 
+    private var listener: OnItemClickListener? = null
+
     class ViewHolderClass(itemView: View): RecyclerView.ViewHolder(itemView){
         val prodImg: ImageView? = itemView.findViewById(R.id.product_image)
         val prodTitle: TextView? = itemView.findViewById(R.id.product_title)
         val prodRating: TextView? = itemView.findViewById(R.id.product_rating)
         val prodPrice: TextView? = itemView.findViewById(R.id.product_price)
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
@@ -38,10 +45,13 @@ class ProductAdapter(private val productList: ArrayList<ProductResponseItem>, pr
         //bind with the necessary variables
         val currentItem: ProductResponseItem = productList[position]
         val itemSize: Int = productList.size
-        Log.d("recipe_debug", "size: ${productList.size}")
+//        Log.d("recipe_debug", "size: ${productList.size}")
         holder.prodTitle?.text = currentItem.title
         holder.prodRating?.text = currentItem.rating?.rate.toString()
         holder.prodPrice?.text = "MYR ${currentItem.price.toString()}"
+        holder.itemView.setOnClickListener {
+            listener?.onItemClick(position)
+        }
 
         //glide
         holder.prodImg?.let {
@@ -50,11 +60,10 @@ class ProductAdapter(private val productList: ArrayList<ProductResponseItem>, pr
                 .into(it)
         }
 
-        for (i in 0 until 5){
-            Log.d("recipe_debug", "title: ${productList[i].title}")
-            Log.d("recipe_debug", "size $i")
+    }
 
-        }
+    fun setOnItemClickListener(clickListener: OnItemClickListener){
+        listener = clickListener
     }
 
     @SuppressLint("NotifyDataSetChanged")

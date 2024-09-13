@@ -13,43 +13,31 @@
         android:background="@color/lightgrey">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
+            android:background="@color/darkblue"
+            android:paddingHorizontal="8dp"
             android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:elevation="1dp">
+            android:paddingBottom="20dp">
 
-            <LinearLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_back_white"
+                android:outlineAmbientShadowColor="@color/white">
+
+            </ImageView>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_back"
-                    android:layout_marginRight="12dp">
-
-                </ImageButton>
-
-                <TextView
-                    android:id="@+id/home_user"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:paddingVertical="0dp"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="20dp"
-                    android:text="Profile settings"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                android:text="@string/profile_details"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:paddingStart="0dp"
+                android:paddingVertical="0dp"
+                android:paddingEnd="20dp"/>
         </LinearLayout>
         <FrameLayout
             android:layout_width="match_parent"
@@ -83,16 +71,6 @@
                             android:clipChildren="false"
                             android:orientation="vertical">
 
-<!--                            <TextView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="Recommended for you"-->
-<!--                                android:textSize="20sp"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:layout_margin="15dp">-->
-
-<!--                            </TextView>-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -117,7 +95,7 @@
                                     android:id="@+id/username"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Amir Hamzah"
+                                    android:text="@string/placeholder"
                                     android:textSize="20sp"
                                     android:layout_gravity="center"
                                     android:textStyle="bold"
@@ -136,7 +114,7 @@
                                     android:id="@+id/email"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text=""
+                                    android:text="@string/placeholder"
                                     android:textSize="18sp"
                                     android:layout_gravity="center"
                                     android:textStyle="normal"
@@ -148,72 +126,162 @@
                         </LinearLayout>
                         <!--content-->
                         <LinearLayout
+                            android:id="@+id/btn_favourites_frame"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
+                            android:paddingVertical="15dp"
                             android:background="@drawable/frame_stroke_light_grey_bottom">
 
-                            <LinearLayout
+                            <FrameLayout
+                                android:id="@+id/btn_favourites"
+                                android:paddingHorizontal="20dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_marginHorizontal="12dp"
-                                android:layout_marginVertical="15dp"
-                                android:paddingStart="0dp"
-                                android:paddingEnd="100dp">
+                                android:clickable="true">
 
-                                <TextView
-                                    android:id="@+id/favourite"
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Favourites"
-                                    android:textSize="18sp"
-                                    android:textStyle="normal"
-                                    android:textColor="@color/black">
+                                    android:orientation="horizontal">
 
-                                </TextView>
+                                    <FrameLayout
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
 
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_fav"
+                                            android:adjustViewBounds="true"
+                                            android:layout_gravity="center">
+                                        </ImageView>
+                                    </FrameLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="horizontal"
+                                            android:layout_gravity="center">
+                                            <TextView
+                                                android:id="@+id/favourite"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="Favourites"
+                                                android:textSize="18sp"
+                                                android:textStyle="normal"
+                                                android:paddingStart="0dp"
+                                                android:paddingEnd="20dp"
+                                                android:textColor="@color/black">
 
-                            </LinearLayout>
+                                            </TextView>
 
+                                        </LinearLayout>
+                                    </LinearLayout>
 
+                                    <FrameLayout
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_chevron_right"
+                                            android:adjustViewBounds="true"
+                                            android:layout_gravity="center">
+
+                                        </ImageView>
+
+                                    </FrameLayout>
+                                </LinearLayout>
+
+                            </FrameLayout>
 
                         </LinearLayout>
                         <LinearLayout
-                            android:id="@+id/btn_logout"
+                            android:id="@+id/btn_logout_frame"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
+                            android:paddingVertical="15dp"
                             android:background="@drawable/frame_stroke_light_grey_bottom">
 
-                            <LinearLayout
+                            <FrameLayout
+                                android:id="@+id/btn_logout"
+                                android:paddingHorizontal="20dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_marginHorizontal="12dp"
-                                android:layout_marginVertical="15dp"
-                                android:paddingStart="0dp"
-                                android:paddingEnd="100dp">
+                                android:clickable="true">
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Log out"
-                                    android:textSize="18sp"
-                                    android:textStyle="normal"
-                                    android:textColor="@color/black">
+                                    android:orientation="horizontal">
 
-                                </TextView>
+                                    <FrameLayout
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
 
-                                <FrameLayout
-                                    android:layout_width="20dp"
-                                    android:layout_height="match_parent">
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_logout"
+                                            android:adjustViewBounds="true"
+                                            android:layout_gravity="center">
+                                        </ImageView>
+                                    </FrameLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="horizontal"
+                                            android:layout_gravity="center">
+                                            <TextView
+                                                android:id="@+id/logout"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="Log out"
+                                                android:textSize="18sp"
+                                                android:textStyle="normal"
+                                                android:paddingStart="0dp"
+                                                android:paddingEnd="20dp"
+                                                android:textColor="@color/black">
 
+                                            </TextView>
 
-                                </FrameLayout>
+                                        </LinearLayout>
+                                    </LinearLayout>
 
+                                    <FrameLayout
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
 
-                            </LinearLayout>
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_chevron_right"
+                                            android:adjustViewBounds="true"
+                                            android:layout_gravity="center">
+
+                                        </ImageView>
+
+                                    </FrameLayout>
+                                </LinearLayout>
+
+                            </FrameLayout>
+
                         </LinearLayout>
                     </LinearLayout>
 

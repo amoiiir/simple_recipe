@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     tools:context=".fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@color/darkblue"
             android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="8dp"
             android:paddingTop="25dp"
             android:paddingBottom="20dp">
 
@@ -34,7 +34,7 @@
                 android:paddingVertical="0dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="20dp"
-                android:text="Welcome, User!"
+                android:text="@string/placeholder"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 

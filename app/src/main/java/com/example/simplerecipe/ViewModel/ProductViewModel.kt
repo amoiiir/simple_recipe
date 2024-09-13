@@ -60,6 +60,36 @@ class ProductViewModel : ViewModel() {
         })
     }
 
+    fun getProductById (id : Int){
+        _loading.value = true
+        _error.value = false
+
+        val client = ApiConfig.getApiService().getProductId(id = id)
+
+        client.enqueue(object : Callback<ProductResponseItem>{
+            override fun onResponse(
+                call: Call<ProductResponseItem>,
+                response: Response<ProductResponseItem>
+            ) {
+                val responseBody = response.body()
+                if (!response.isSuccessful || responseBody == null) {
+                    onError("Error Fetching Data")
+                    return
+                }
+
+                _loading.value = false
+                _productData.postValue(listOf(responseBody))
+            }
+
+            override fun onFailure(
+                call: Call<ProductResponseItem>,
+                t: Throwable
+            ) {
+                onError("Error Fetching Data")
+            }
+        })
+    }
+
     // Error handling method
     private fun onError(inputMessage: String) {
         val message = if (inputMessage.isNullOrBlank()) "Unknown Error"

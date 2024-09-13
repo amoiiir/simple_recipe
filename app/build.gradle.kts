@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.firestore.ktx)
     val fragment_version =  "1.8.2"
 
     //retrofit used to fetch API Calls
