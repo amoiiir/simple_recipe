@@ -17,6 +17,9 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    //check current user
+    val user = firebaseAuth.currentUser
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +36,14 @@ class LoginActivity : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty()){
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
 
-                    //check current user
-                    val user = firebaseAuth.currentUser
-                    if(user != null){
-                        Log.d("recipe_debug", "onCreate: current user ${user.email}")
-                    }
 
                     if (it.isSuccessful){
+
+                        //check the current user
+                        if(user != null){
+                            Log.d("recipe_debug", "onCreate: current user ${user.email}")
+                        }
+
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         Log.d("recipe_debug", "onCreate: success")

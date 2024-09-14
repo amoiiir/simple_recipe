@@ -1,5 +1,6 @@
 package com.example.simplerecipe.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.example.simplerecipe.ViewModel.ProductViewModel
 import com.example.simplerecipe.adapter.ProductAdapter
 import com.example.simplerecipe.databinding.FragmentHomeBinding
 import com.example.simplerecipe.model.ProductResponseItem
+import com.example.simplerecipe.view.product.ProductDetails
 import com.google.firebase.firestore.FirebaseFirestore
 
 /*
@@ -110,19 +112,30 @@ class HomeFragment : Fragment() {
         //viewlifecycleowner is like a lifecycle of the fragment
         productViewModel.productData.observe(viewLifecycleOwner){ data ->
 
-            //call recommended cards    
             if (data != null) {
+                //call recommended cards
                 getRecommendedCards(data)
                 getProductCards(data)
 
                 recommendedAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
                     override fun onItemClick(position: Int){
                         val product = data[position]
-                        Log.d("recipe_debug", "onItemClick: ${product.title}")
-                        Log.d("recipe_debug", "onItemClick: ${product.id}")
+                        Log.d("recipe_debug", "onItemClick: recommendedAdapter ${product.title}")
+                        Log.d("recipe_debug", "onItemClick: recommendedAdapter ${product.id}")
+
                     }
                 })
 
+                productAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
+                    override fun onItemClick(position: Int){
+                        val product = data[position]
+                        Log.d("recipe_debug", "onItemClick: productAdapter ${product.title}")
+                        Log.d("recipe_debug", "onItemClick: productAdapter ${product.id}")
+
+                        //redirect user to product detail
+                        startActivity(ProductDetails.productIntent(requireContext(), product.id.toString()))
+                    }
+                })
             }else{
                 Log.d("recipe_debug", "setResultText: data is null")
             }

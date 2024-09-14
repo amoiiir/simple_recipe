@@ -46,11 +46,13 @@ class ProductAdapter(private val productList: ArrayList<ProductResponseItem>, pr
         val currentItem: ProductResponseItem = productList[position]
         val itemSize: Int = productList.size
 //        Log.d("recipe_debug", "size: ${productList.size}")
-        holder.prodTitle?.text = currentItem.title
-        holder.prodRating?.text = currentItem.rating?.rate.toString()
-        holder.prodPrice?.text = "MYR ${currentItem.price.toString()}"
-        holder.itemView.setOnClickListener {
-            listener?.onItemClick(position)
+        holder.let {
+            it.prodTitle?.text = currentItem.title
+            it.prodRating?.text = currentItem.rating?.rate.toString()
+            it.prodPrice?.text = "MYR ${currentItem.price.toString()}"
+            it.itemView.setOnClickListener {
+                listener?.onItemClick(position)
+            }
         }
 
         //glide
