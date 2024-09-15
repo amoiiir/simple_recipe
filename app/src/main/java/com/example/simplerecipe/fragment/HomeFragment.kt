@@ -16,7 +16,9 @@ import com.example.simplerecipe.adapter.ProductAdapter
 import com.example.simplerecipe.databinding.FragmentHomeBinding
 import com.example.simplerecipe.model.ProductResponseItem
 import com.example.simplerecipe.view.product.ProductDetails
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 /*
 Available functions:
@@ -39,6 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var productAdapter: ProductAdapter
 
     //call db
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
 
@@ -47,6 +50,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         productViewModel = ProductViewModel()
+        firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
     }
@@ -76,16 +80,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun greetings() {
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    binding.homeUser.text = "Hello, ${document.data["username"].toString()}!"
+        val users = firebaseAuth.currentUser?.uid
+        if (users != null) {
+            db.collection("users")
+                .document(users)
+                .get()
+                .addOnSuccessListener {
+                val username = it.getString("username")
+                binding.homeUser.text = "Hello, $username!"
                 }
-            }
-            .addOnFailureListener { exception ->
-                binding.homeUser.text = "Welcome Back!"
-            }
+                .addOnFailureListener {
+                    binding.homeUser.text = "Hello, User!"
+                }
+        }else{
+            binding.homeUser.text = "Hello, User!"
+        }
     }
 
     private fun gridProducts() {
@@ -130,10 +139,10 @@ class HomeFragment : Fragment() {
                     override fun onItemClick(position: Int){
                         val product = data[position]
                         Log.d("recipe_debug", "onItemClick: productAdapter ${product.title}")
-                        Log.d("recipe_debug", "onItemClick: productAdapter ${product.id}")
+                        Log.d("recipe_debug", "onItemClick: productAdapter ${product.id!!}")
 
                         //redirect user to product detail
-                        startActivity(ProductDetails.productIntent(requireContext(), product.id.toString()))
+                        startActivity(ProductDetails.productIntent(requireContext(), product.id))
                     }
                 })
             }else{

@@ -58,8 +58,9 @@ class SignupActivity : AppCompatActivity() {
                     //create user
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            //save details
-                            saveUserData(firebaseAuth.currentUser?.uid.toString(), email, username)
+                            //for each new user, save their data
+                            val userId = firebaseAuth.currentUser?.uid
+                            saveUserData(userId!!, email, username)
                             Log.d("recipe_debug", "onCreate: username $username")
 
                             //redurect to login
@@ -81,7 +82,8 @@ class SignupActivity : AppCompatActivity() {
 
     private fun saveUserData(userId: String, email: String, username: String) {
         val userData = UserData(userId, email, username)
-        val userRef = db.collection("users").document("userDetails")
+        //this will make sure that each uses will get their own unique document
+        val userRef = db.collection("users").document(userId)
 
         userRef.set(userData)
             .addOnCompleteListener {

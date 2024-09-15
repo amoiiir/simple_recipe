@@ -16,6 +16,10 @@ class ProductViewModel : ViewModel() {
     private val _productData = MutableLiveData<List<ProductResponseItem>?>()
     val productData: LiveData<List<ProductResponseItem>?> get() = _productData
 
+    //to retrieve single product by id
+    private val _productDataById = MutableLiveData<ProductResponseItem?>()
+    val productDataById: LiveData<ProductResponseItem?> get() = _productDataById
+
     // Loading state
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean>
@@ -78,7 +82,7 @@ class ProductViewModel : ViewModel() {
                 }
 
                 _loading.value = false
-                _productData.postValue(listOf(responseBody))
+                _productDataById.postValue(responseBody)
             }
 
             override fun onFailure(

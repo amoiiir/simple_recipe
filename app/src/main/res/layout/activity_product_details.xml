@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".view.product.ProductDetails">
 
     <!-- Scrollable content starts here -->
@@ -54,16 +55,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_margin="12dp"
                     android:background="@drawable/frame_stroke_light_grey_bottom">
 
                     <TextView
                         android:id="@+id/product_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Product Title"
+                        android:text="@string/placeholder"
                         android:textSize="23sp"
                         android:gravity="center"
                         android:textStyle="bold"
+                        android:textColor="@color/black"
                         android:maxLines="2">
 
                     </TextView>
@@ -72,17 +75,41 @@
 
 
                 <LinearLayout
-                    android:id="@+id/product_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@drawable/frame_stroke_light_grey_bottom">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/fake"
-                        android:layout_margin="15dp" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/product_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:text="@string/placeholder"
+                            android:gravity="center"
+                            android:layout_gravity="end"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:drawableLeft="@drawable/baseline_star_24"
+                            android:drawablePadding="6dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:background="@drawable/frame_darkblue_10dp">
+
+
+                        </TextView>
+
+                        <ImageView
+                            android:layout_margin="12dp"
+                            android:id="@+id/product_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/fake" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -111,19 +138,20 @@
                             android:paddingStart="10dp"
                             android:paddingEnd="120dp"
                             android:textSize="16sp"
-                            android:text="MYR 0.00"
+                            android:text="@string/placeholder"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/product_category"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:textSize="16sp"
-                            android:text="Men's wear"
+                            android:text="@string/placeholder"
                             android:gravity="center"
                             android:layout_gravity="end"
-                            android:background="@drawable/frame_darkblue_10dp"
+                            android:background="@drawable/frame_red_10dp"
                             android:textColor="@color/yellow" />
                     </LinearLayout>
 
@@ -173,7 +201,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text="Product Details"
-                                            android:textSize="18sp"
+                                            android:textSize="23sp"
                                             android:textStyle="bold"
                                             android:paddingStart="0dp"
                                             android:paddingEnd="20dp"
@@ -210,11 +238,44 @@
                         android:id="@+id/product_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="loreum ipsum"
-                        android:textSize="14sp" />
+                        android:text="@string/placeholder"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="25dp">
+
+        <LinearLayout
+            android:id="@+id/btn_add_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add to cart"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:background="@drawable/frame_darkblue_10dp"
+                android:textColor="@color/white">
+            </TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

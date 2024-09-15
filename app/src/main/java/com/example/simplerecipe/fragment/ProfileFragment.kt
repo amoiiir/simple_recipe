@@ -28,7 +28,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,18 +46,23 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getDetails() {
-        //read users data
-        db.collection("users")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    binding.username.text = document.data["username"].toString()
-                    binding.email.text = document.data["email"].toString()
+        //check current users
+        val users = firebaseAuth.currentUser?.uid
+        if (users != null) {
+            db.collection("users").document(users).get().addOnSuccessListener {
+                val username = it.getString("username")
+                val email = it.getString("email")
+                binding.username.text = username
+                binding.email.text = email
+            }
+                .addOnFailureListener {
+                    binding.username.text = "User"
+                    binding.email.text = "Email"
                 }
-            }
-            .addOnFailureListener { exception ->
-                binding.username.text = "Error getting documents."
-            }
+        }else{
+            binding.username.text = "User"
+            binding.email.text = "Email"
+        }
     }
 
     private fun initLogout() {
