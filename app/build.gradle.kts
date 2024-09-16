@@ -38,11 +38,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
     implementation(libs.firebase.firestore.ktx)
     val fragment_version =  "1.8.2"
+    val lottie_version = "3.4.0"
+    val material_version = "1.12.0"
 
     //retrofit used to fetch API Calls
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -55,6 +58,12 @@ dependencies {
 
     //splash screen
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+    //lottie animation
+    implementation("com.airbnb.android:lottie:$lottie_version")
+
+    //material depedencies
+    implementation("com.google.android.material:material:$material_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

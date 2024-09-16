@@ -6,43 +6,47 @@
     android:fitsSystemWindows="true"
     tools:context=".view.product.ProductDetails">
 
+    <!-- Product details header -->
+    <LinearLayout
+        android:id="@+id/top_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/darkblue"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_back_white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_details"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:paddingStart="0dp"
+            android:paddingVertical="0dp"
+            android:paddingEnd="20dp" />
+    </LinearLayout>
+
     <!-- Scrollable content starts here -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_nav_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:paddingBottom="100dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/darkblue"
-                android:paddingHorizontal="8dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
-
-                <ImageView
-                    android:id="@+id/btn_back"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_back_white"
-                    android:outlineAmbientShadowColor="@color/white" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/product_details"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:paddingStart="0dp"
-                    android:paddingVertical="0dp"
-                    android:paddingEnd="20dp" />
-            </LinearLayout>
 
             <!-- Product details content inside ScrollView -->
             <LinearLayout
@@ -251,7 +255,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="25dp">
+        android:background="@drawable/frame_top_radius_10dp">
 
         <LinearLayout
             android:id="@+id/btn_add_to_cart"
@@ -260,7 +264,7 @@
             android:orientation="horizontal"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:paddingHorizontal="10dp">
+            android:layout_margin="12dp">
 
             <TextView
                 android:layout_width="match_parent"

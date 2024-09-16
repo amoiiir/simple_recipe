@@ -1,0 +1,7 @@
+<resources>
+    <!-- Define your app's light theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Force the app to stay in light mode -->
+<!--        <item name="android:forceDarkAllowed">false</item>-->
+    </style>
+</resources>

@@ -15,6 +15,7 @@ import com.example.simplerecipe.ViewModel.ProductViewModel
 import com.example.simplerecipe.adapter.ProductAdapter
 import com.example.simplerecipe.databinding.FragmentHomeBinding
 import com.example.simplerecipe.model.ProductResponseItem
+import com.example.simplerecipe.view.loader.LoadingUtils
 import com.example.simplerecipe.view.product.ProductDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -73,10 +74,14 @@ class HomeFragment : Fragment() {
 
         productViewModel.getAllProduct()
 
+        //call loading animation
+//        LoadingUtils.showDialog(requireContext(), true)
+
         greetings()
         subscribe()
         recommendedCards()
         gridProducts()
+
     }
 
     private fun greetings() {
