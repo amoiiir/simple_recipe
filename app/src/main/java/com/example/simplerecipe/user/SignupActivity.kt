@@ -61,7 +61,6 @@ class SignupActivity : AppCompatActivity() {
                             //for each new user, save their data
                             val userId = firebaseAuth.currentUser?.uid
                             saveUserData(userId!!, email, username)
-                            Log.d("recipe_debug", "onCreate: username $username")
 
                             //redurect to login
                             val intent = Intent(this, LoginActivity::class.java)
