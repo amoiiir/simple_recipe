@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -92,26 +91,72 @@
                             </TextView>
                         </LinearLayout>
                         <LinearLayout
+                            android:id="@+id/error_frame"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="15dp"
+                            android:layout_marginVertical="5dp"
                             android:clipToPadding="false"
                             android:clipChildren="false"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:gravity="center">
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_recommendedCards"
+                            <TextView
+                                android:id="@+id/tv_error"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:overScrollMode="never"
-                                android:layout_marginVertical="10dp"
-                                android:layout_marginHorizontal="15dp"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                                android:text="@string/placeholder"
+                                android:textSize="20sp"
+                                android:textAlignment="center">
 
-                            </androidx.recyclerview.widget.RecyclerView>
+                            </TextView>
 
                         </LinearLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="15dp"
+                                android:clipToPadding="false"
+                                android:clipChildren="false"
+                                android:orientation="horizontal">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_recommendedCards"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:overScrollMode="never"
+                                    android:layout_marginVertical="10dp"
+                                    android:layout_marginHorizontal="15dp"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+                                </androidx.recyclerview.widget.RecyclerView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:visibility="gone"
+                                    android:layout_marginVertical="15dp"
+                                    android:indeterminate="true"
+
+                                    />
+                            </LinearLayout>
+
+                        </RelativeLayout>
                         <!--content-->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -132,28 +177,50 @@
                                 android:layout_margin="8dp">
                             </TextView>
                         </LinearLayout>
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clipToPadding="false"
-                            android:clipChildren="false"
-                            android:layout_marginVertical="15dp"
-                            android:paddingBottom="100dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content">
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_productCards"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:overScrollMode="never"
-                                android:nestedScrollingEnabled="true"
-                                android:layout_marginVertical="10dp"
-                                android:layout_marginHorizontal="15dp">
+                                android:clipToPadding="false"
+                                android:clipChildren="false"
+                                android:layout_marginVertical="15dp"
+                                android:paddingBottom="100dp"
+                                android:orientation="horizontal">
 
-                            </androidx.recyclerview.widget.RecyclerView>
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_productCards"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:overScrollMode="never"
+                                    android:nestedScrollingEnabled="true"
+                                    android:layout_marginVertical="10dp"
+                                    android:layout_marginHorizontal="15dp">
 
-                        </LinearLayout>
+                                </androidx.recyclerview.widget.RecyclerView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:visibility="gone"
+                                    android:layout_marginVertical="15dp"
+                                    android:indeterminate="true"
+                                    />
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
                     </LinearLayout>
 

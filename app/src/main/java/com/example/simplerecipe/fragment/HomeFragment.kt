@@ -130,6 +130,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun subscribe() {
+
+        productViewModel.loading.observe(viewLifecycleOwner){ loading ->
+            binding.progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+            binding.progressBar2.visibility = if (loading) View.VISIBLE else View.GONE
+        }
+
+        productViewModel.error.observe(viewLifecycleOwner){error ->
+            binding.errorFrame.visibility = if (error) View.VISIBLE else View.GONE
+            binding.tvError.text = (if (error) resources.getString(R.string.loading) else "").toString()
+        }
+
         //for display data to the ui
         //viewlifecycleowner is like a lifecycle of the fragment
         productViewModel.productData.observe(viewLifecycleOwner){ data ->
