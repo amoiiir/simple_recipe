@@ -15,6 +15,7 @@ import com.example.simplerecipe.ViewModel.ProductViewModel
 import com.example.simplerecipe.adapter.ProductAdapter
 import com.example.simplerecipe.databinding.FragmentHomeBinding
 import com.example.simplerecipe.model.ProductResponseItem
+import com.example.simplerecipe.view.cart.CartPage
 import com.example.simplerecipe.view.loader.LoadingUtils
 import com.example.simplerecipe.view.product.ProductDetails
 import com.google.firebase.auth.FirebaseAuth
@@ -81,7 +82,14 @@ class HomeFragment : Fragment() {
         subscribe()
         recommendedCards()
         gridProducts()
+        directAddToCart()
 
+    }
+
+    private fun directAddToCart() {
+        binding.btnCart.setOnClickListener {
+            startActivity(Intent(requireContext(), CartPage::class.java))
+        }
     }
 
     private fun greetings() {

@@ -260,7 +260,7 @@
         <LinearLayout
             android:id="@+id/btn_add_to_cart"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:orientation="horizontal"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"

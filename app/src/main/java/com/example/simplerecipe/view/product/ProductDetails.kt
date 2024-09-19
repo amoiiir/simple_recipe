@@ -79,8 +79,9 @@ class ProductDetails : AppCompatActivity() {
                     .into(it.productImage)
                 
                 //add to cart function
-                binding.btnAddToCart.setOnClickListener { 
-                    addToCart(data?.id!!, data.title!!, data.price!!, data.description!!, data.category!!, data.image!!)
+                binding.btnAddToCart.setOnClickListener {
+                    val initAmount = 1
+                    addToCart(data?.id!!, data.title!!, data.price!!, data.description!!, data.category!!, data.image!!, initAmount)
                 }
                 
             }
@@ -89,21 +90,21 @@ class ProductDetails : AppCompatActivity() {
         
     }
 
-    private fun addToCart(productId: Int, title: String, price: Any, description: String, category: String, image: String) {
+    private fun addToCart(productId: Int, title: String, price: Any, description: String, category: String, image: String, amount: Int) {
         //get current user
         val currentUser = firebaseAuth.currentUser?.uid
         Log.d("recipe_debug", "addToCart: $currentUser")
 
 
-        val cartData = CartData(productId, title, price.toString().toDouble(), description, category, image)
+        val cartData = CartData(productId, title, price.toString().toDouble(), description, category, image, amount)
         val cartRef = db.collection("users/$currentUser/cart").document(productId.toString())
 
         cartRef.set(cartData)
             .addOnSuccessListener {
-                Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, cartData.title + "has been added to the cart!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Failed to add to cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to add item!", Toast.LENGTH_SHORT).show()
             }
     }
 
