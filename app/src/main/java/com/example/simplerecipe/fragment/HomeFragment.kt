@@ -138,7 +138,7 @@ class HomeFragment : Fragment() {
 
         productViewModel.error.observe(viewLifecycleOwner){error ->
             binding.errorFrame.visibility = if (error) View.VISIBLE else View.GONE
-            binding.tvError.text = (if (error) resources.getString(R.string.loading) else "").toString()
+            binding.tvError.text = (if (error) resources.getString(R.string.error) else "").toString()
         }
 
         //for display data to the ui

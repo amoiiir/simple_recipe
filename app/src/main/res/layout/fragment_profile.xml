@@ -128,6 +128,85 @@
                         </LinearLayout>
                         <!--content-->
                         <LinearLayout
+                            android:id="@+id/btn_edit_profile_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingVertical="15dp"
+                            android:background="@drawable/frame_stroke_light_grey_bottom">
+
+                            <FrameLayout
+                                android:id="@+id/btn_edit_profile"
+                                android:paddingHorizontal="20dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <FrameLayout
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_edit"
+                                            android:adjustViewBounds="true"
+                                            android:layout_gravity="center">
+                                        </ImageView>
+                                    </FrameLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:orientation="horizontal"
+                                            android:layout_gravity="center">
+                                            <TextView
+                                                android:id="@+id/tv_edit_profile"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="Edit Profile"
+                                                android:textSize="18sp"
+                                                android:textStyle="normal"
+                                                android:paddingStart="0dp"
+                                                android:paddingEnd="20dp"
+                                                android:textColor="@color/black">
+
+                                            </TextView>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <FrameLayout
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_chevron_right"
+                                            android:adjustViewBounds="true"
+                                            android:layout_gravity="center">
+
+                                        </ImageView>
+
+                                    </FrameLayout>
+                                </LinearLayout>
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
                             android:id="@+id/btn_favourites_frame"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

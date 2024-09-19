@@ -63,6 +63,18 @@ class ProductDetails : AppCompatActivity() {
         productViewModel = ProductViewModel()
         productViewModel.getProductById(intent.getIntExtra(PRODUCT_ID, 0))
 
+        productViewModel.loading.observe(this){loading ->
+            if (loading) {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.productDetailsContent.visibility = View.GONE
+                binding.bottomMenu.visibility = View.GONE
+            } else {
+                binding.progressBar.visibility = View.GONE
+                binding.productDetailsContent.visibility = View.VISIBLE
+                binding.bottomMenu.visibility = View.VISIBLE
+            }
+        }
+
 
         //observe the data
         productViewModel.productDataById.observe(this){data ->
