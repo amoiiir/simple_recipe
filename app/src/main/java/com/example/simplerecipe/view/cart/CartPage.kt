@@ -2,6 +2,7 @@ package com.example.simplerecipe.view.cart
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -35,34 +36,31 @@ class CartPage : AppCompatActivity() {
         binding = ActivityCartPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        try {
-            //initialize firestore
-            firebaseAuth = FirebaseAuth.getInstance()
-            db = FirebaseFirestore.getInstance()
-
-            //initialize recyclerview
-            cartRecyclerView = binding.rvCart
-            cartRecyclerView.layoutManager = LinearLayoutManager(this)
-            cartRecyclerView.setHasFixedSize(true)
-
-            //initialize arraylist
-            cartList = arrayListOf()
-
-            //initialize adapter
-            cartAdapter = CartAdapter(cartList)
-
-            //set adapter
-            cartRecyclerView.adapter = cartAdapter
-
-            eventChangeListListener()
-        }catch (e:Exception){
-            Log.e("document_firebase", "Error getting documents ${e.message}")
-        }
-
-
         initView()
         initUserCart()
 
+    }
+
+    private fun initUserCart() {
+        //initialize firestore
+        firebaseAuth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        //initialize recyclerview
+        cartRecyclerView = binding.rvCart
+        cartRecyclerView.layoutManager = LinearLayoutManager(this)
+        cartRecyclerView.setHasFixedSize(true)
+
+        //initialize arraylist
+        cartList = arrayListOf()
+
+        //initialize adapter
+        cartAdapter = CartAdapter(cartList)
+
+        //set adapter
+        cartRecyclerView.adapter = cartAdapter
+
+        eventChangeListListener()
     }
 
     private fun eventChangeListListener() {
@@ -76,7 +74,7 @@ class CartPage : AppCompatActivity() {
 
                     cartList.clear()
                     for (doc : DocumentChange in value?.documentChanges!!) {
-
+                        binding.tvEmptyCart.visibility = View.GONE
                         if (doc.type == DocumentChange.Type.ADDED) {
                             val cartData = doc.document.toObject(CartData::class.java)
                             cartList.add(cartData)
@@ -89,28 +87,11 @@ class CartPage : AppCompatActivity() {
             })
     }
 
-    private fun initUserCart() {
-        db.collection("users/${firebaseAuth.currentUser?.uid}/cart")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("document_firebase", "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener {
-                Log.e("document_firebase", "Error getting documents ${it.message}")
-            }
-    }
-
-    private fun checkCurrentUser() {
-    }
-
     private fun initView() {
 
         binding.btnBack.setOnClickListener {
             finish()
         }
-
 
     }
 }

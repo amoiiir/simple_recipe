@@ -93,7 +93,9 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/frame_stroke_10dp_lightgrey"
                     android:clickable="true"
-                    android:focusable="true" />
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
+
 
                 <TextView
                     android:id="@+id/product_amount"
@@ -114,7 +116,8 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/frame_stroke_10dp_lightgrey"
                     android:clickable="true"
-                    android:focusable="true" />
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
 
             </LinearLayout>
 
