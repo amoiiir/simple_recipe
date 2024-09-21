@@ -65,6 +65,9 @@ dependencies {
     //material depedencies
     implementation("com.google.android.material:material:$material_version")
 
+    // FirebaseUI for Cloud Firestore
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

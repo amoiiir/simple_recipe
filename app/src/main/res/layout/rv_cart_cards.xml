@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="10dp"
     android:layout_marginHorizontal="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginVertical="10dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="5dp">
 
@@ -32,7 +32,9 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/fake"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/frame_stroke_10dp_lightgrey">
+                    android:background="@drawable/frame_stroke_10dp_lightgrey"
+                    android:maxHeight="50dp"
+                    android:maxWidth="50dp">
 
                 </ImageView>
 
@@ -44,10 +46,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/product_name"
+                    android:id="@+id/product_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Product Name"
+                    android:text="Product Title"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:paddingVertical="20dp"
@@ -58,8 +60,8 @@
                     android:id="@+id/product_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:paddingBottom="50dp"
+                    android:textSize="14sp"
+                    android:paddingBottom="30dp"
                     android:text="Price">
 
                 </TextView>
@@ -89,9 +91,9 @@
                     android:src="@drawable/ic_up"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/frame_stroke_10dp_lightgrey">
-
-                </ImageView>
+                    android:background="@drawable/frame_stroke_10dp_lightgrey"
+                    android:clickable="true"
+                    android:focusable="true" />
 
                 <TextView
                     android:id="@+id/product_amount"
@@ -101,9 +103,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/frame_stroke_10dp_lightgrey">
-
-                </TextView>
+                    android:background="@drawable/frame_stroke_10dp_lightgrey" />
 
                 <ImageView
                     android:id="@+id/btn_subtract"
@@ -112,11 +112,12 @@
                     android:src="@drawable/ic_down"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/frame_stroke_10dp_lightgrey">
-
-                </ImageView>
+                    android:background="@drawable/frame_stroke_10dp_lightgrey"
+                    android:clickable="true"
+                    android:focusable="true" />
 
             </LinearLayout>
+
 
 
         </LinearLayout>
