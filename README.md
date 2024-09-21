@@ -6,3 +6,4 @@
 2. How to fetch data using retrofit: https://medium.com/@dimaswisodewo98/fetch-data-from-api-in-android-studio-kotlin-using-retrofit-with-mvvm-architecture-4f6b673f6a28
 3. Cloud firestore documentations: https://firebase.google.com/docs/firestore/quickstart?hl=en&authuser=1#kotlin+ktx
 4. Lottie animations: https://medium.com/swlh/custom-loader-android-2923a68d3395
+5. Firestore retrieve data and display it on recyclerview adapter: https://youtu.be/Ly0xwWlUpVM?si=Mw4YdriF0atRVenV
