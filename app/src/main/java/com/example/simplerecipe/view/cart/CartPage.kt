@@ -38,7 +38,18 @@ class CartPage : AppCompatActivity() {
 
         initView()
         initUserCart()
+        initCheckout()
+        totalItem()
+    }
 
+    private fun initCheckout() {
+        binding.btnCheckout.setOnClickListener {
+            //navigate to checkout page
+            cartList.forEach {
+                Log.d("cart_data", "initCheckout: ${it.title}")
+            }
+
+        }
     }
 
     private fun initUserCart() {

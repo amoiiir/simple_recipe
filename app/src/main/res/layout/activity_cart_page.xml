@@ -87,7 +87,6 @@
         android:background="@drawable/frame_top_radius_10dp">
 
         <TextView
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Total: $0.00"
@@ -99,7 +98,7 @@
         </TextView>
 
         <LinearLayout
-            android:id="@+id/btn_add_to_cart"
+            android:id="@+id/btn_checkout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"

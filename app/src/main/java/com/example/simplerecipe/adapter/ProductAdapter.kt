@@ -45,7 +45,6 @@ class ProductAdapter(private val productList: ArrayList<ProductResponseItem>, pr
         //bind with the necessary variables
         val currentItem: ProductResponseItem = productList[position]
         val itemSize: Int = productList.size
-//        Log.d("recipe_debug", "size: ${productList.size}")
         holder.let {
             it.prodTitle?.text = currentItem.title
             it.prodRating?.text = currentItem.rating?.rate.toString()
