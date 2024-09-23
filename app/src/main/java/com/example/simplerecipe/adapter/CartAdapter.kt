@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.simplerecipe.R
 import com.example.simplerecipe.model.CartData
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class CartAdapter(
@@ -18,6 +21,7 @@ class CartAdapter(
 ): RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
     val addedAmount: Int = 1
+    private lateinit var db : FirebaseFirestore
 
     class ViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
         val prodImg: ImageView? = itemView.findViewById(R.id.product_image)
@@ -41,6 +45,8 @@ class CartAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = cartList[position]
+        db = FirebaseFirestore.getInstance()
+
 
         holder.let {data->
             data.prodTitle?.text = currentItem.title
@@ -63,9 +69,17 @@ class CartAdapter(
 
     private fun initSubtractItem(holder: ViewHolder, currentItem: CartData, position: Int) {
         holder.btnSubtract?.setOnClickListener {
-            currentItem.amount = currentItem.amount?.minus(addedAmount)
-            notifyItemChanged(position)
-            Log.d("document_firebase", "onBindViewHolder: Add button clicked ${currentItem.amount}")
+            if (currentItem.amount!! > 1) {
+                currentItem.amount = currentItem.amount?.minus(addedAmount)
+                notifyItemChanged(position)
+
+                //update firestore
+                val docRef = db.collection("cart").document(currentItem.id.toString())
+                docRef.update("amount", FieldValue.increment(-1))
+
+            }else{
+                Toast.makeText(holder.itemView.context, "Minimum amount is 1", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -73,7 +87,12 @@ class CartAdapter(
         holder.btnAdd?.setOnClickListener {
             currentItem.amount = currentItem.amount?.plus(addedAmount)
             notifyItemChanged(position)
-            Log.d("document_firebase", "onBindViewHolder: Add button clicked ${currentItem.amount}")
+
+            //update firestore
+            val docRef = db.collection("cart").document(currentItem.id.toString())
+            Log.d("cart_data", "initAddItem: ${docRef.id}")
+            docRef.update("amount", FieldValue.increment(1))
+            
         }
     }
 

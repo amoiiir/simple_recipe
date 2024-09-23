@@ -1,5 +1,6 @@
 package com.example.simplerecipe.view.cart
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -29,6 +30,8 @@ class CartPage : AppCompatActivity() {
     private lateinit var cartRecyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
     private lateinit var cartList: ArrayList<CartData>
+    private var totalAmount: Double? = 0.0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +42,21 @@ class CartPage : AppCompatActivity() {
         initView()
         initUserCart()
         initCheckout()
-        totalItem()
+//        initTotalPrice()
     }
 
     private fun initCheckout() {
         binding.btnCheckout.setOnClickListener {
             //navigate to checkout page
-            cartList.forEach {
-                Log.d("cart_data", "initCheckout: ${it.title}")
+            if (totalAmount != null) {
+                for (i in cartList) {
+                    totalAmount = totalAmount!! + i.price!! * i.amount!!
+                }
             }
-
+            Log.d("cart_data", "total amount: $totalAmount")
+            binding.tvTotal.text = "MYR $totalAmount"
         }
+
     }
 
     private fun initUserCart() {
@@ -74,9 +81,29 @@ class CartPage : AppCompatActivity() {
         eventChangeListListener()
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun initTotalPrice() {
+        //navigate to checkout page
+        if (totalAmount != null) {
+            for (i in cartList) {
+                if (i.price != null && i.amount != null) {
+                    totalAmount = totalAmount!! + i.price * i.amount!!
+                    Log.d("cart_data", "total amount condition: $totalAmount")
+                }else {
+                    Log.d("cart_data", "price is empty: $totalAmount")
+                }
+            }
+        }
+        Log.d("cart_data", "total amount initTotalPrice: $totalAmount")
+
+        //bind
+        binding.tvTotal.text = "MYR $totalAmount"
+    }
+
     private fun eventChangeListListener() {
         db.collection("users/${firebaseAuth.currentUser?.uid}/cart")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                @SuppressLint("NotifyDataSetChanged")
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error != null) {
                         Log.e("document_firebase", "Listen failed.", error)

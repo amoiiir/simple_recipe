@@ -8,4 +8,5 @@ data class CartData(
     val category: String? = "",
     val image: String? = "",
     var amount: Int? = 0,
+//    var totalAmount: Double? = 0.0,
 )

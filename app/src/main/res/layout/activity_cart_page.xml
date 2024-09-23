@@ -86,16 +86,36 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/frame_top_radius_10dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total: $0.00"
-            android:paddingHorizontal="18dp"
-            android:paddingVertical="14dp"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold">
-        </TextView>
+            android:orientation="horizontal"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total: "
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:paddingStart="15dp"
+                android:paddingEnd="200dp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/placeholder"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:paddingStart="0dp">
+
+            </TextView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_checkout"
