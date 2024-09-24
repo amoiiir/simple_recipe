@@ -6,11 +6,8 @@ import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.simplerecipe.R
 import com.example.simplerecipe.adapter.CartAdapter
 import com.example.simplerecipe.databinding.ActivityCartPageBinding
 import com.example.simplerecipe.model.CartData
@@ -20,6 +17,8 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import kotlin.math.log
+
 
 class CartPage : AppCompatActivity() {
 
@@ -41,20 +40,31 @@ class CartPage : AppCompatActivity() {
 
         initView()
         initUserCart()
-        initCheckout()
-//        initTotalPrice()
+//        initCheckout()
+    }
+
+    private fun initDeleteItem() {
+        //get current item
+        val position = cartList.size
+        Log.d("cart_data", "initDeleteItem: $position")
+
+        binding.deleteItem.setOnClickListener {data ->
+            db.collection("users/${firebaseAuth.currentUser?.uid}/cart")
+                .document()
+                .delete()
+                .addOnSuccessListener {
+                    Log.d("cart_data", " deleted  data: ${cartList[0].id}")
+                    Log.d("cart_data", "DocumentSnapshot successfully deleted! ")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("cart_data", "Error deleting document", e)
+                }
+        }
     }
 
     private fun initCheckout() {
         binding.btnCheckout.setOnClickListener {
             //navigate to checkout page
-            if (totalAmount != null) {
-                for (i in cartList) {
-                    totalAmount = totalAmount!! + i.price!! * i.amount!!
-                }
-            }
-            Log.d("cart_data", "total amount: $totalAmount")
-            binding.tvTotal.text = "MYR $totalAmount"
         }
 
     }
@@ -88,16 +98,15 @@ class CartPage : AppCompatActivity() {
             for (i in cartList) {
                 if (i.price != null && i.amount != null) {
                     totalAmount = totalAmount!! + i.price * i.amount!!
-                    Log.d("cart_data", "total amount condition: $totalAmount")
                 }else {
                     Log.d("cart_data", "price is empty: $totalAmount")
                 }
             }
         }
-        Log.d("cart_data", "total amount initTotalPrice: $totalAmount")
+        Log.d("cart_data", "total amount : $totalAmount")
 
         //bind
-        binding.tvTotal.text = "MYR $totalAmount"
+        binding.tvTotal.text = "MYR " + "%.2f".format(totalAmount)
     }
 
     private fun eventChangeListListener() {
@@ -112,7 +121,12 @@ class CartPage : AppCompatActivity() {
 
                     cartList.clear()
                     for (doc : DocumentChange in value?.documentChanges!!) {
+
+                        //hide contents
                         binding.tvEmptyCart.visibility = View.GONE
+                        binding.totalPriceFrame.visibility = View.VISIBLE
+
+                        //
                         if (doc.type == DocumentChange.Type.ADDED) {
                             val cartData = doc.document.toObject(CartData::class.java)
                             cartList.add(cartData)
@@ -120,6 +134,8 @@ class CartPage : AppCompatActivity() {
 
                     }
                     cartAdapter.notifyDataSetChanged()
+                    initDeleteItem()
+                    initTotalPrice()
                 }
 
             })

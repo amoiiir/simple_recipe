@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -41,11 +42,16 @@ android {
 
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(libs.firebase.firestore.ktx)
     val fragment_version =  "1.8.2"
     val lottie_version = "3.4.0"
     val material_version = "1.12.0"
+    val epoxy_version = "5.1.4"
 
     //retrofit used to fetch API Calls
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -67,6 +73,11 @@ dependencies {
 
     // FirebaseUI for Cloud Firestore
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+
+    //epoxy
+    implementation("com.airbnb.android:epoxy:$epoxy_version")
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    annotationProcessor("com.airbnb.android:epoxy-processor:$epoxy_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

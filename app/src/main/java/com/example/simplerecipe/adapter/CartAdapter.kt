@@ -47,7 +47,6 @@ class CartAdapter(
         val currentItem = cartList[position]
         db = FirebaseFirestore.getInstance()
 
-
         holder.let {data->
             data.prodTitle?.text = currentItem.title
             data.prodPrice?.text = "MYR ${currentItem.price}"
@@ -63,8 +62,6 @@ class CartAdapter(
 
         initAddItem(holder, currentItem, position)
         initSubtractItem(holder, currentItem, position)
-
-
     }
 
     private fun initSubtractItem(holder: ViewHolder, currentItem: CartData, position: Int) {
@@ -86,13 +83,22 @@ class CartAdapter(
     private fun initAddItem(holder: ViewHolder, currentItem: CartData, position: Int) {
         holder.btnAdd?.setOnClickListener {
             currentItem.amount = currentItem.amount?.plus(addedAmount)
-            notifyItemChanged(position)
 
             //update firestore
             val docRef = db.collection("cart").document(currentItem.id.toString())
-            Log.d("cart_data", "initAddItem: ${docRef.id}")
-            docRef.update("amount", FieldValue.increment(1))
-            
+            docRef
+                .get()
+                .addOnSuccessListener {
+                    Log.d("cart_adapter", "initAddItem: ${currentItem}")
+                    docRef.update("amount", FieldValue.increment(1))
+                }
+                .addOnFailureListener {
+                    Log.d("cart_adapter", "initAddItem: ${it.message}")
+                }
+
+//            Log.d("cart_adapter", "initAddItem: ${currentItem.id}")
+//            docRef.update("amount", FieldValue.increment(1))
+            notifyItemChanged(position)
         }
     }
 
