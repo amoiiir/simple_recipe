@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,7 +54,7 @@ class CartPage : AppCompatActivity() {
                 .document()
                 .delete()
                 .addOnSuccessListener {
-                    Log.d("cart_data", " deleted  data: ${cartList[0].id}")
+                    Toast.makeText(this, "Item deleted successfully", Toast.LENGTH_SHORT).show()
                     Log.d("cart_data", "DocumentSnapshot successfully deleted! ")
                 }
                 .addOnFailureListener { e ->
@@ -93,6 +94,9 @@ class CartPage : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initTotalPrice() {
+
+        totalAmount = 0.0
+
         //navigate to checkout page
         if (totalAmount != null) {
             for (i in cartList) {
@@ -101,6 +105,7 @@ class CartPage : AppCompatActivity() {
                 }else {
                     Log.d("cart_data", "price is empty: $totalAmount")
                 }
+//                totalAmount = i.price!! * i.amount!!
             }
         }
         Log.d("cart_data", "total amount : $totalAmount")

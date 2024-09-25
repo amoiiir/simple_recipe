@@ -91,19 +91,10 @@ class CartAdapter(
 
             //update firestore
             val docRef = db.collection("users/${firebaseAuth.currentUser?.uid}/cart").document(currentItem.id.toString())
-            Log.d("cart_data", "initAddItem: $docRef")
             docRef.update("amount", FieldValue.increment(1))
 
             notifyItemChanged(position)
         }
     }
 
-    fun totalItem(): Int {
-        var total = 0
-        for (i in cartList) {
-            total += i.amount!! * i.price!!.toInt()
-            Log.d("cart_data", "totalItem: $total")
-        }
-        return total
-    }
 }
