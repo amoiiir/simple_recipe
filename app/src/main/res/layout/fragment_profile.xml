@@ -20,16 +20,8 @@
             android:orientation="horizontal"
             android:background="@color/darkblue"
             android:paddingHorizontal="8dp"
-            android:paddingTop="30dp"
+            android:paddingTop="25dp"
             android:paddingBottom="20dp">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_back_white"
-                android:outlineAmbientShadowColor="@color/white">
-
-            </ImageView>
 
             <TextView
                 android:layout_width="match_parent"

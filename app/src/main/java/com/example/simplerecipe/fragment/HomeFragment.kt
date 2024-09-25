@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         //will create the fragment and will be used to initialize variables
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         productViewModel = ProductViewModel()
         firebaseAuth = FirebaseAuth.getInstance()
@@ -153,7 +155,6 @@ class HomeFragment : Fragment() {
                 recommendedAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
                     override fun onItemClick(position: Int){
                         val product = data[position]
-                        Log.d("recipe_debug", "onItemClick: recommendedAdapter ${product.title}")
                         Log.d("recipe_debug", "onItemClick: recommendedAdapter ${product.id}")
 
                     }
@@ -162,7 +163,6 @@ class HomeFragment : Fragment() {
                 productAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
                     override fun onItemClick(position: Int){
                         val product = data[position]
-                        Log.d("recipe_debug", "onItemClick: productAdapter ${product.title}")
                         Log.d("recipe_debug", "onItemClick: productAdapter ${product.id!!}")
 
                         //redirect user to product detail

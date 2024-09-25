@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplerecipe.adapter.CartAdapter
@@ -38,6 +39,7 @@ class CartPage : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityCartPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         initView()
         initUserCart()
@@ -90,6 +92,13 @@ class CartPage : AppCompatActivity() {
         cartRecyclerView.adapter = cartAdapter
 
         eventChangeListListener()
+
+        cartAdapter.setOnItemClickListener(object : CartAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                val currentItem = cartList[position]
+                Toast.makeText(this@CartPage, "Item clicked: ${currentItem.id}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")

@@ -24,6 +24,7 @@ class CartAdapter(
     val addedAmount: Int = 1
     private lateinit var db : FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
+    private var mListener: OnItemClickListener ?= null
 
     class ViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
         val prodImg: ImageView? = itemView.findViewById(R.id.product_image)
@@ -33,7 +34,17 @@ class CartAdapter(
         val prodCategory: TextView? = itemView.findViewById(R.id.product_category)
         val btnAdd: ImageView? = itemView.findViewById(R.id.btn_add)
         val btnSubtract: ImageView? = itemView.findViewById(R.id.btn_subtract)
+        val cartFrame: View = itemView.findViewById(R.id.cart_card_frame)
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        mListener = listener
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_cart_cards, parent, false)
@@ -61,6 +72,10 @@ class CartAdapter(
             Glide.with(holder.itemView.context)
                 .load(currentItem.image)
                 .into(it)
+        }
+
+        holder.cartFrame.setOnClickListener {
+            mListener?.onItemClick(position)
         }
 
         initAddItem(holder, currentItem, position)
