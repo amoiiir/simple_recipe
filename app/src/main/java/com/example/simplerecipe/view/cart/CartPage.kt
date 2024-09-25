@@ -119,7 +119,7 @@ class CartPage : AppCompatActivity() {
                         return
                     }
 
-                    cartList.clear()
+//                    cartList.clear()
                     for (doc : DocumentChange in value?.documentChanges!!) {
 
                         //hide contents
@@ -134,7 +134,7 @@ class CartPage : AppCompatActivity() {
 
                     }
                     cartAdapter.notifyDataSetChanged()
-                    initDeleteItem()
+//                    initDeleteItem()
                     initTotalPrice()
                 }
 

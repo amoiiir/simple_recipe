@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.simplerecipe.R
 import com.example.simplerecipe.model.CartData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -22,6 +23,7 @@ class CartAdapter(
 
     val addedAmount: Int = 1
     private lateinit var db : FirebaseFirestore
+    private lateinit var firebaseAuth: FirebaseAuth
 
     class ViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
         val prodImg: ImageView? = itemView.findViewById(R.id.product_image)
@@ -46,6 +48,7 @@ class CartAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = cartList[position]
         db = FirebaseFirestore.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
         holder.let {data->
             data.prodTitle?.text = currentItem.title
@@ -68,11 +71,13 @@ class CartAdapter(
         holder.btnSubtract?.setOnClickListener {
             if (currentItem.amount!! > 1) {
                 currentItem.amount = currentItem.amount?.minus(addedAmount)
-                notifyItemChanged(position)
 
                 //update firestore
-                val docRef = db.collection("cart").document(currentItem.id.toString())
+                val docRef = db.collection("users/${firebaseAuth.currentUser?.uid}/cart").document(currentItem.id.toString())
+                Log.d("cart_data", "initSubtractItem: $docRef")
                 docRef.update("amount", FieldValue.increment(-1))
+                notifyItemChanged(position)
+
 
             }else{
                 Toast.makeText(holder.itemView.context, "Minimum amount is 1", Toast.LENGTH_SHORT).show()
@@ -85,19 +90,10 @@ class CartAdapter(
             currentItem.amount = currentItem.amount?.plus(addedAmount)
 
             //update firestore
-            val docRef = db.collection("cart").document(currentItem.id.toString())
-            docRef
-                .get()
-                .addOnSuccessListener {
-                    Log.d("cart_adapter", "initAddItem: ${currentItem}")
-                    docRef.update("amount", FieldValue.increment(1))
-                }
-                .addOnFailureListener {
-                    Log.d("cart_adapter", "initAddItem: ${it.message}")
-                }
+            val docRef = db.collection("users/${firebaseAuth.currentUser?.uid}/cart").document(currentItem.id.toString())
+            Log.d("cart_data", "initAddItem: $docRef")
+            docRef.update("amount", FieldValue.increment(1))
 
-//            Log.d("cart_adapter", "initAddItem: ${currentItem.id}")
-//            docRef.update("amount", FieldValue.increment(1))
             notifyItemChanged(position)
         }
     }

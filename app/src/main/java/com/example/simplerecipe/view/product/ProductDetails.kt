@@ -1,5 +1,6 @@
 package com.example.simplerecipe.view.product
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -58,6 +59,7 @@ class ProductDetails : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayProduct() {
         //call the function inside of the viewmodel
         productViewModel = ProductViewModel()
@@ -113,7 +115,7 @@ class ProductDetails : AppCompatActivity() {
 
         cartRef.set(cartData)
             .addOnSuccessListener {
-                Toast.makeText(this, cartData.title + "has been added to the cart!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, cartData.title + " has been added to the cart!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to add item!", Toast.LENGTH_SHORT).show()

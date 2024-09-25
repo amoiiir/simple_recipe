@@ -52,6 +52,7 @@ dependencies {
     val lottie_version = "3.4.0"
     val material_version = "1.12.0"
     val epoxy_version = "5.1.4"
+    val room_version = "2.6.1"
 
     //retrofit used to fetch API Calls
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -78,6 +79,13 @@ dependencies {
     implementation("com.airbnb.android:epoxy:$epoxy_version")
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     annotationProcessor("com.airbnb.android:epoxy-processor:$epoxy_version")
+
+    // Room
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
