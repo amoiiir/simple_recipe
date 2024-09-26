@@ -9,3 +9,4 @@
 5. Firestore retrieve data and display it on recyclerview adapter: https://youtu.be/Ly0xwWlUpVM?si=Mw4YdriF0atRVenV
 6. xabaras dependecies: https://github.com/xabaras/RecyclerViewSwipeDecorator
 7. recyclerview gestures: https://youtu.be/xE8z8wiXz18?si=Ql4IW2DUgCWLZY5d
+8. Understanding swipe and drag gestures in RecyclerView: https://medium.com/getpowerplay/understanding-swipe-and-drag-gestures-in-recyclerview-cb3136beff20
