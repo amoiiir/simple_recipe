@@ -9,5 +9,6 @@
     <color name="yellow">#f9f871</color>
     <color name="light_grey1">#edf4f9</color>
     <color name="red">#FF0000</color>
+    <color name="darkgrey">#636363</color>
 
 </resources>

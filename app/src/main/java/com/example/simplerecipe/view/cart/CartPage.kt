@@ -1,25 +1,37 @@
 package com.example.simplerecipe.view.cart
 
 import android.annotation.SuppressLint
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.simplerecipe.R
 import com.example.simplerecipe.adapter.CartAdapter
 import com.example.simplerecipe.databinding.ActivityCartPageBinding
 import com.example.simplerecipe.model.CartData
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import kotlin.math.abs
 import kotlin.math.log
+import kotlin.math.roundToInt
 
 
 class CartPage : AppCompatActivity() {
@@ -32,17 +44,21 @@ class CartPage : AppCompatActivity() {
     private lateinit var cartAdapter: CartAdapter
     private lateinit var cartList: ArrayList<CartData>
     private var totalAmount: Double? = 0.0
-
+    private lateinit var swipeLeft : ItemTouchHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityCartPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        //for swiping purposes
+        val displayMetrics: DisplayMetrics = resources.displayMetrics
+        val width = (displayMetrics.widthPixels / displayMetrics.density).toInt().dp
+        val deleteIcon = resources.getDrawable(R.drawable.ic_delete, null)
 
         initView()
-        initUserCart()
+        initUserCart(width, deleteIcon)
 //        initCheckout()
     }
 
@@ -72,7 +88,7 @@ class CartPage : AppCompatActivity() {
 
     }
 
-    private fun initUserCart() {
+    private fun initUserCart(width: Int, deleteIcon: Drawable) {
         //initialize firestore
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -91,8 +107,82 @@ class CartPage : AppCompatActivity() {
         //set adapter
         cartRecyclerView.adapter = cartAdapter
 
-        eventChangeListListener()
+        //swipe left function
+        swipeLeft = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val pos = viewHolder.absoluteAdapterPosition
+                Log.d("list_debug", "onSwiped in arrayList: $pos")
+                cartList.removeAt(pos)
+                cartAdapter.notifyItemRemoved(pos)
+
+                Snackbar.make(
+                    findViewById(R.id.cart_main),
+                    "Item Deleted",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+
+                val itemView = viewHolder.itemView
+                val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
+                val cornerRadius = 10f
+                val paint = Paint().apply {
+                    color = resources.getColor(R.color.red, null)
+                    isAntiAlias = true
+                }
+
+                if (dX < 0) {
+
+                    val background = RectF(
+                        itemView.right.toFloat() + dX,
+                        itemView.top.toFloat(),
+                        itemView.right.toFloat(),
+                        itemView.bottom.toFloat()
+                    )
+                    c.drawRoundRect(background, cornerRadius, cornerRadius, paint)
+
+                    deleteIcon.bounds = Rect(
+                        itemView.right - iconMargin - deleteIcon.intrinsicWidth,
+                        itemView.top + iconMargin,
+                        itemView.right - iconMargin,
+                        itemView.bottom - iconMargin
+                    )
+                    deleteIcon.draw(c)
+                }
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+        })
+
+        eventChangeListListener()
+        swipeLeft.attachToRecyclerView(cartRecyclerView)
+
+        //this function is for clicking the cards
         cartAdapter.setOnItemClickListener(object : CartAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 val currentItem = cartList[position]
@@ -107,14 +197,11 @@ class CartPage : AppCompatActivity() {
         totalAmount = 0.0
 
         //navigate to checkout page
-        if (totalAmount != null) {
-            for (i in cartList) {
-                if (i.price != null && i.amount != null) {
-                    totalAmount = totalAmount!! + i.price * i.amount!!
-                }else {
-                    Log.d("cart_data", "price is empty: $totalAmount")
-                }
-//                totalAmount = i.price!! * i.amount!!
+        for (i in cartList) {
+            if (i.price != null && i.amount != null) {
+                totalAmount = totalAmount!! + i.price * i.amount!!
+            }else {
+                Log.d("cart_data", "price is empty: $totalAmount")
             }
         }
         Log.d("cart_data", "total amount : $totalAmount")
@@ -162,4 +249,11 @@ class CartPage : AppCompatActivity() {
         }
 
     }
+
+
+    private val Int.dp
+        get() = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            toFloat(), DisplayMetrics()
+        ).roundToInt()
 }
