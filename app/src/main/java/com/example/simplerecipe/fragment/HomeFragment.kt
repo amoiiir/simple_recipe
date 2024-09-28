@@ -152,13 +152,13 @@ class HomeFragment : Fragment() {
                 getRecommendedCards(data)
                 getProductCards(data)
 
-                recommendedAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
-                    override fun onItemClick(position: Int){
-                        val product = data[position]
-                        Log.d("recipe_debug", "onItemClick: recommendedAdapter ${product.id}")
-
-                    }
-                })
+//                recommendedAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
+//                    override fun onItemClick(position: Int){
+//                        val product = data[position]
+//                        Log.d("recipe_debug", "onItemClick: recommendedAdapter ${product.id}")
+//
+//                    }
+//                })
 
                 productAdapter.setOnItemClickListener(object: ProductAdapter.OnItemClickListener{
                     override fun onItemClick(position: Int){

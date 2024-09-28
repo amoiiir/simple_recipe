@@ -59,26 +59,8 @@ class CartPage : AppCompatActivity() {
 
         initView()
         initUserCart(width, deleteIcon)
+//        initDeleteItem()
 //        initCheckout()
-    }
-
-    private fun initDeleteItem() {
-        //get current item
-        val position = cartList.size
-        Log.d("cart_data", "initDeleteItem: $position")
-
-        binding.deleteItem.setOnClickListener {data ->
-            db.collection("users/${firebaseAuth.currentUser?.uid}/cart")
-                .document()
-                .delete()
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Item deleted successfully", Toast.LENGTH_SHORT).show()
-                    Log.d("cart_data", "DocumentSnapshot successfully deleted! ")
-                }
-                .addOnFailureListener { e ->
-                    Log.w("cart_data", "Error deleting document", e)
-                }
-        }
     }
 
     private fun initCheckout() {
@@ -119,9 +101,22 @@ class CartPage : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val pos = viewHolder.absoluteAdapterPosition
-                Log.d("list_debug", "onSwiped in arrayList: $pos")
+                val cartItem = cartList[pos]
+                val cartId = cartItem.id.toString()
+
                 cartList.removeAt(pos)
                 cartAdapter.notifyItemRemoved(pos)
+
+                //delete item from firestore
+                db.collection("users/${firebaseAuth.currentUser?.uid}/cart")
+                    .document(cartId)
+                    .delete()
+                    .addOnSuccessListener {
+                        Log.d("cart_data", "DocumentSnapshot successfully deleted! ")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("cart_data", "Error deleting document", e)
+                    }
 
                 Snackbar.make(
                     findViewById(R.id.cart_main),
@@ -223,19 +218,22 @@ class CartPage : AppCompatActivity() {
 //                    cartList.clear()
                     for (doc : DocumentChange in value?.documentChanges!!) {
 
-                        //hide contents
-                        binding.tvEmptyCart.visibility = View.GONE
-                        binding.totalPriceFrame.visibility = View.VISIBLE
+                        if (cartList.isEmpty()){
+                            binding.tvEmptyCart.visibility = View.VISIBLE
+                            binding.totalPriceFrame.visibility = View.GONE
+                        }
 
-                        //
                         if (doc.type == DocumentChange.Type.ADDED) {
+                            binding.tvEmptyCart.visibility = View.GONE
+                            binding.totalPriceFrame.visibility = View.VISIBLE
+
                             val cartData = doc.document.toObject(CartData::class.java)
                             cartList.add(cartData)
                         }
 
+
                     }
                     cartAdapter.notifyDataSetChanged()
-//                    initDeleteItem()
                     initTotalPrice()
                 }
 

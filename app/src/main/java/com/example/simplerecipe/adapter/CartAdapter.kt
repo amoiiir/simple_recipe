@@ -58,6 +58,7 @@ class CartAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = cartList[position]
+        val productId = getCartId(position)
         db = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -80,6 +81,10 @@ class CartAdapter(
 
         initAddItem(holder, currentItem, position)
         initSubtractItem(holder, currentItem, position)
+    }
+
+    private fun getCartId(position: Int): String {
+        return cartList[position].id.toString()
     }
 
     private fun initSubtractItem(holder: ViewHolder, currentItem: CartData, position: Int) {
