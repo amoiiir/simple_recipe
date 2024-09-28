@@ -1,5 +1,7 @@
 # Simple E-commerce application using traditional android development:
 
+# 1.0 Introduction
+
 ## REFERENCES
 
 1. Users: https://medium.com/@myofficework000/managing-user-authentication-and-data-with-firestore-in-android-using-jetpack-compose-6fb4da2e01e5
