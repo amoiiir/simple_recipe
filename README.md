@@ -2,6 +2,10 @@
 
 # 1.0 Introduction
 
+A simple e-commerce application developed for me to delve into android native platform. Currently adding stripe payment gateways.
+
+# Things that I learned through out this projects
+
 ## REFERENCES
 
 1. Users: https://medium.com/@myofficework000/managing-user-authentication-and-data-with-firestore-in-android-using-jetpack-compose-6fb4da2e01e5
